@@ -79,10 +79,19 @@ class BinOpAst():
                 return self.left.postfix_str() + ' ' + self.right.postfix_str() + ' ' + self.val
 
     def additive_identity(self):
+        print(self.val)
         """
         Reduce additive identities
         x + 0 = x
         """
+        if self.type == NodeType.operator:
+            self.left.additive_identity()
+            self.right.additive_identity()
+            if self.val == '+':
+                if self.right.val == '0':
+                    self = self.left
+                elif self.left.val == '0':
+                    self = self.right
         # IMPLEMENT ME!
         pass
                         
@@ -92,6 +101,14 @@ class BinOpAst():
         x * 1 = x
         """
         # IMPLEMENT ME!
+        if self.type == NodeType.operator:
+            self.left.multiplicative_identity()
+            self.right.multiplicative_identity()
+            if self.val == '*':
+                if self.right.val == '1':
+                    self = self.left
+                elif self.left.val == '1':
+                    self = self.right
         pass
     
     
@@ -101,6 +118,14 @@ class BinOpAst():
         x * 0 = 0
         """
         # Optionally, IMPLEMENT ME! (I'm pretty easy)
+        if self.type == NodeType.operator:
+            self.left.mult_by_zero()
+            self.right.mult_by_zero()
+            if self.val == '*':
+                if self.right.val == '0':
+                    self = self.right
+                elif self.left.val == '0':
+                    self = self.left
         pass
     
     def constant_fold(self):
@@ -130,4 +155,8 @@ class BinOpAst():
 
 
 if __name__ == "__main__":
-    unittest.main()
+    #unittest.main()
+    print ("Here")
+
+    this = BinOpAst(list('+ 1 0'.split()))
+    this.additive_identity()
