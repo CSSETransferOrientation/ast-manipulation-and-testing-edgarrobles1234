@@ -89,25 +89,39 @@ class BinOpAst():
             self.right.additive_identity()
             if self.val == '+':
                 if self.right.val == '0':
-                    self = self.left
+                    self.val = self.left.val
+                    self.type = self.left.type
+                    self.right = self.left.right
+                    self.left = self.left.left
+
                 elif self.left.val == '0':
-                    self = self.right
-        pass
+                    self.val = self.right.val
+                    self.type = self.right.type
+                    self.left = self.right.left
+                    self.right = self.right.right
+        return 
                         
     def multiplicative_identity(self):
         """
         Reduce multiplicative identities
         x * 1 = x
         """
+        print(self.val)
         if self.type == NodeType.operator:
             self.left.multiplicative_identity()
             self.right.multiplicative_identity()
             if self.val == '*':
                 if self.right.val == '1':
-                    self = self.left
+                    self.val = self.left.val
+                    self.type = self.left.type
+                    self.right = self.left.right
+                    self.left = self.left.left
                 elif self.left.val == '1':
-                    self = self.right
-        pass
+                    self.val = self.right.val
+                    self.type = self.right.type
+                    self.left = self.right.left
+                    self.right = self.right.right
+        return
     
     
     def mult_by_zero(self):
@@ -120,21 +134,17 @@ class BinOpAst():
             self.right.mult_by_zero()
             if self.val == '*':
                 if self.right.val == '0':
-                    self = self.right
+                    self.val = self.right.val
+                    self.type = self.right.type
+                    self.left = self.right.left
+                    self.right = self.right.right
                 elif self.left.val == '0':
-                    self = self.left
-        pass
-    
-    def constant_fold(self):
-        """
-        Fold constants,
-        e.g. 1 + 2 = 3
-        e.g. x + 2 = x + 2
-        """
-        # Optionally, IMPLEMENT ME! This is a bit more challenging. 
-        # You also likely want to add an additional node type to your AST
-        # to represent identifiers.
-        pass            
+                    self.val = self.left.val
+                    self.type = self.left.type
+                    self.right = self.left.right
+                    self.left = self.left.left
+
+          
     
 
     def simplify_binops(self):
@@ -148,12 +158,17 @@ class BinOpAst():
         self.additive_identity()
         self.multiplicative_identity()
         self.mult_by_zero()
-        self.constant_fold()
+        return self
+
+class BinOpAstTester(unittest.TestCase):
+     input
 
 
 if __name__ == "__main__":
-    #unittest.main()
-    print ("Here")
-
-    this = BinOpAst(list('+ 1 0'.split()))
+    unittest.main()
+    this = BinOpAst()
     this.additive_identity()
+    
+    
+
+    print(this.postfix_str())
