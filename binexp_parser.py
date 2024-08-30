@@ -79,7 +79,6 @@ class BinOpAst():
                 return self.left.postfix_str() + ' ' + self.right.postfix_str() + ' ' + self.val
 
     def additive_identity(self):
-        print(self.val)
         """
         Reduce additive identities
         x + 0 = x
@@ -161,14 +160,62 @@ class BinOpAst():
         return self
 
 class BinOpAstTester(unittest.TestCase):
-     input
+     def test_mult_zero(self):
+        in_file = osjoin("testbench","mult_by_zero","inputs")
+        out_file = osjoin("testbench","mult_by_zero","outputs")
+
+        for filename in os.listdir(in_file):
+            in_path = osjoin(in_file, filename)
+            out_path = osjoin(out_file, filename)
+            with open (in_path, "r") as file: 
+                input = file.read().strip()
+                arr = list(input.split())
+            with open(out_path,"r") as file: 
+                exp_solution = file.read().strip()
+            testing = BinOpAst(arr)
+            testing.mult_by_zero()
+
+            output = testing.prefix_str()
+            self.assertEqual(output, exp_solution)
+
+     def test_mult_id(self):
+        in_file = osjoin("testbench","mult_id","inputs")
+        out_file = osjoin("testbench","mult_id","outputs")
+
+        for filename in os.listdir(in_file):
+            in_path = osjoin(in_file, filename)
+            out_path = osjoin(out_file, filename)
+            with open (in_path, "r") as file: 
+                input = file.read().strip()
+                arr = list(input.split())
+            with open(out_path,"r") as file: 
+                exp_solution = file.read().strip()
+            testing = BinOpAst(arr)
+            testing.multiplicative_identity()
+
+            output = testing.prefix_str()
+            self.assertEqual(output, exp_solution)
+
+     def test_additive_identity(self):
+        in_file = osjoin("testbench","arith_id","inputs")
+        out_file = osjoin("testbench","arith_id","outputs")
+
+        for filename in os.listdir(in_file):
+            in_path = osjoin(in_file, filename)
+            out_path = osjoin(out_file, filename)
+            with open (in_path, "r") as file: 
+                input = file.read().strip()
+                arr = list(input.split())
+            with open(out_path,"r") as file: 
+                exp_solution = file.read().strip()
+            testing = BinOpAst(arr)
+            testing.additive_identity()
+
+            output = testing.prefix_str()
+            self.assertEqual(output, exp_solution)
 
 
 if __name__ == "__main__":
     unittest.main()
-    this = BinOpAst()
-    this.additive_identity()
     
     
-
-    print(this.postfix_str())
