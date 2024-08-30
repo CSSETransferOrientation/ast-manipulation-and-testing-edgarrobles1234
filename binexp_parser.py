@@ -92,7 +92,6 @@ class BinOpAst():
                     self = self.left
                 elif self.left.val == '0':
                     self = self.right
-        # IMPLEMENT ME!
         pass
                         
     def multiplicative_identity(self):
@@ -100,7 +99,6 @@ class BinOpAst():
         Reduce multiplicative identities
         x * 1 = x
         """
-        # IMPLEMENT ME!
         if self.type == NodeType.operator:
             self.left.multiplicative_identity()
             self.right.multiplicative_identity()
@@ -117,7 +115,6 @@ class BinOpAst():
         Reduce multiplication by zero
         x * 0 = 0
         """
-        # Optionally, IMPLEMENT ME! (I'm pretty easy)
         if self.type == NodeType.operator:
             self.left.mult_by_zero()
             self.right.mult_by_zero()
