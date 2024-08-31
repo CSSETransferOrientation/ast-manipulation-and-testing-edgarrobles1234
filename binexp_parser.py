@@ -105,7 +105,6 @@ class BinOpAst():
         Reduce multiplicative identities
         x * 1 = x
         """
-        print(self.val)
         if self.type == NodeType.operator:
             self.left.multiplicative_identity()
             self.right.multiplicative_identity()
