@@ -6,3 +6,5 @@ self in python classes.
 
 3. I think the part I struggled with the most was figuring out how to implement testing for each of the functions.
 I would have appreciated having more practice with opening files on python. 
+
+;;> Tests are a bit sparse, but the implementation is very well done here! 
